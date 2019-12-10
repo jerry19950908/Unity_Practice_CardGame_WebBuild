@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         aud = GetComponent<AudioSource>();
+        
     }
 
     /// <summary>
@@ -62,6 +64,10 @@ public class GameManager : MonoBehaviour
 
     private AudioSource aud;        // 音效來源：喇叭
 
+    [Header("遊戲結束畫面")]
+    public GameObject overwin, overlose, overdraw;
+
+
 
     /// <summary>
     /// 勝負顯示：使用玩家與電腦取得卡片判斷獲勝、平手或失敗
@@ -71,7 +77,35 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void GameWinner()
     {
+        if(player > pc )
+        {
+            overwin.SetActive(true);
+            aud.PlayOneShot(soundWin, 1.5f);
+        }
         
+        if(player == pc )
+        {
+            overdraw.SetActive(true);
+            aud.PlayOneShot(soundTie, 1.5f);
+        }
+
+
+        if (player < pc)
+        {
+            overlose.SetActive(true);
+            aud.PlayOneShot(soundLose, 1.5f);
+        }
     }
+
+    public void Replay()
+    {
+        SceneManager.LoadScene("練習場景");
+    }
+
+
+
+
+
+
     #endregion
 }
